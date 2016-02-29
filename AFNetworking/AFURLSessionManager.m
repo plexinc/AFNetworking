@@ -487,6 +487,9 @@ static NSString * const AFNSURLSessionTaskDidSuspendNotification = @"com.alamofi
 }
 
 - (void)dealloc {
+    if ([[NSProcessInfo processInfo] isOperatingSystemAtLeastVersion:(NSOperatingSystemVersion){9,0,0}])
+        return;
+    
     dispatch_sync(url_session_manager_notification_queue(), ^{
         [[NSNotificationCenter defaultCenter] removeObserver:self];
     });
